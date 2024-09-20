@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f3f4;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .email-container {
+            width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-header {
+            padding: 15px;
+            background-color: #4285f4;
+            color: #fff;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .email-body {
+            padding: 20px;
+        }
+
+        .email-body label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .email-body input[type="text"],
+        .email-body input[type="email"],
+        .email-body textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .email-body textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .email-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #eee;
+            background-color: #f1f3f4;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .email-footer button {
+            background-color: #34a853;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .email-footer button:hover {
+            background-color: #2c8e45;
+        }
+
+        .email-footer .discard {
+            background-color: #e7e7e7;
+            color: #333;
+            margin-right: 10px;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .email-footer .discard:hover {
+            background-color: #d6d6d6;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Form to get the recipient email -->
+    <form id="emailForm">
+        <div class="email-container">
+            <div class="email-header">
+                Compose New Email
+            </div>
+    
+            <div class="email-body">
+                <label for="from">From:</label>
+            <input type="email" id="from" placeholder="Enter your email">
+                <label for="to">To:</label>
+                <input type="email" id="to" placeholder="Enter recipient's email">
+    
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" placeholder="Enter email subject">
+    
+                <label for="message">Message:</label>
+                <textarea id="message" placeholder="Type your message here..."></textarea>
+            </div>
+    
+            <div class="email-footer">
+                <button class="discard">Discard</button>
+                <button id="submit">Send</button>
+            </div>
+        </div>
+    
+    </form>
+
+   
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', async function(event) {
+            event.preventDefault();  // Prevent form from submitting the traditional way
+
+            // Get the input email value
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const subject = document.getElementById('subject').value;
+            const message= document.getElementById('message').value;
+
+            // Prepare the request data
+            const requestData = {
+                from:from,
+                to: to,
+                subject: subject,
+                message: message,
+            };
+
+            // Send POST request to the backend to send the email
+            try {
+                const response = await fetch('http://localhost:8000/api//send-mail-handlebar', {  // Endpoint where the sendGmail function is located
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData),
+                });
+
+                const result = await response.json();
+
+                // Display the result message
+                if (response.status === 201) {
+                    document.getElementById("emailForm").reset();
+                } else {
+                    document.getElementById('message').innerHTML = `<p style="color: red;">${result.error}</p>`;
+                }
+
+            } catch (error) {
+                // Handle any errors
+                document.getElementById('message').innerHTML = `<p style="color: red;">Error: Unable to send the email. Please try again later.</p>`;
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
