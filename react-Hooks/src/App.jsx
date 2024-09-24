@@ -30,7 +30,7 @@ function App() {
       setCount(count-1)
     }
   }
-  
+
 // let count = 15
 // const addValue = ()=>{
 //   count = count + 1 
@@ -44,7 +44,7 @@ function App() {
     <>
      <h1>Hello World!</h1>
       <h2>Count : {count}</h2>
-     <button onClick={addValue}>addValue :{count}</button>
+     <button onClick={addValue}>addValue :{count}</button>&nbsp; &nbsp;
      <button onClick={removeValue}>removeValue :{count}</button>
     </>
   )
