@@ -48,11 +48,11 @@ function App() {
     <div
         className="w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat"
         style={{
-            backgroundImage: `url('https://images.pexels.com/photos/3793689/pexels-photo-3793689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
+            backgroundImage: `url(''https://media.istockphoto.com/id/1251235330/photo/stock-market-investment-graph-on-financial-numbers-abstract-background-3d-illustration.jpg?s=612x612&w=0&k=20&c=PyWS90--ytAuI105jptJtVopfAVvz3ZkpNfdVuWkuCg=')`,
         }}
     >
         <div className="w-full">
-            <div className="w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-white/30">
+            <div className="w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-black">
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
