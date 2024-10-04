@@ -20,7 +20,7 @@ const getRandomUser = async()=>{
        }
     )
     const users = await response.json()
-    const randomUser = users[Math.floor(Math.random() * users.length)];
+  
     return users
 }
 
